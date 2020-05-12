@@ -30,8 +30,8 @@ void draw() {
     ////latitude -90~90
     ////longtitude -180~180
 
-    //float mapX = map(longtitude, -180, 180, 0, width);//remaping to the world map
-    //float mapY = map(latitude, -90, 90, 0, height);
+    float mapX = map(longtitude, -180, 180, 0, width);//remaping to the world map
+    float mapY = map(latitude, -90, 90, 0, height);
 
     float case = map(case, 0, 2000000, 6, 8);
 
