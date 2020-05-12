@@ -1,4 +1,6 @@
 PImage worldmap;
+PImage soundIcon;
+PImage muteIcon;
 Table table;
 int currentDay = 0;
 
@@ -11,21 +13,28 @@ void setup() {
   image(worldmap, 0, 0);
   worldmap.resize(width, height);
 
+  soundIcon = loadImage("1200px-Speaker_Icon.png");
+  muteIcon = loadImage("800px-Mute_Icon.png");
+
+
+
   table = loadTable("data/time_series_covid19_confirmed_global_clean.csv", "header");
 }
 
 void draw() {
   background(worldmap);
+  soundIcon.resize(0,40);
+  image(soundIcon, 0, 0);
+  muteIcon.resize(0,40);
+  image(muteIcon, 50, 0);
   smooth();
   currentDay ++;
 
-  for (TableRow row: table.rows()) {
+  for (TableRow row : table.rows()) {
     String province = row.getString("Province/State");
     String country = row.getString("Country/Region");
-
     float latitude = row.getFloat("Lat");
     float longtitude = row.getFloat("Long");
-
 
 
     for (int dayNumber = 0; dayNumber < 94; dayNumber = dayNumber+1) {
@@ -44,6 +53,8 @@ void draw() {
         stroke(255, 0, 0);
         strokeWeight(cases);
         point(mapX, mapY);
+        fill(0);
+        text(cases,mapX+1, mapY+1);
       }
     }
   }
