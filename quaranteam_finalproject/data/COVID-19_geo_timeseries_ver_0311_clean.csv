@@ -1,4 +1,4 @@
-province,country,latitude,longitude,confirmed_cases,deaths,recovered,update_time,,,country_code,region,country_flag
+province,country,latitude,longitude,confirmed_cases,deaths,recovered,update_time,exact_time,am_pm,country_code,region,country_flag
 Hubei,China,35.86166,104.195397,729,39,,1/24/20 0:00,2:55:00,PM,CHN,Asia,https://www.countryflags.io/cn/flat/64.png
 Guangdong,China,35.86166,104.195397,53,0,,1/24/20 0:00,2:55:00,PM,CHN,Asia,https://www.countryflags.io/cn/flat/64.png
 Zhejiang,China,35.86166,104.195397,43,0,,1/24/20 0:00,2:55:00,PM,CHN,Asia,https://www.countryflags.io/cn/flat/64.png
