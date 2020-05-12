@@ -10,7 +10,7 @@ void setup() {
   //image(worldmap, 0, 0);
   //worldmap.resize(width, height);
 
-  table = loadTable("data/COVID-19_geo_timeseries_ver_0311_clean.csv", "header");
+  table = loadTable("data/time_series_covid19_confirmed_global_clean.csv", "header"); //COVID-19_geo_timeseries_ver_0311_clean.csv
 }
 
 void draw() {
