@@ -1,21 +1,29 @@
 class Button {
   float x, y, size;
-  boolean isPressed = false;
+  boolean pressable = true;
   boolean on = false;
-  color c1 = color(255, 0, 0, 255);
-  color c2 = color(255, 0, 0, 0);
-  
+
   Button (float x, float y, float size) {
     this.x = x;
     this.y = y;
     this.size = size;
   }
-  
-  void display() {
-    
-  }
-  
-  void update() {
-    
+
+  String update() {
+    if (mousePressed) {
+      if (mouseButton == LEFT && pressable) {
+        if (mouseX >= x - (size/2) && mouseX <= x + (size/2) && mouseY >= y - (size/2) && mouseY <= y +(size/2)) {
+          pressable = false;
+          on = !on;
+          if (!muted) {
+            pop1.play();
+          }
+        }
+      }
+    } else if (!mousePressed || mouseButton != LEFT) {
+      pressable = true;
+      on = false;
+    }
+    return null;
   }
 }

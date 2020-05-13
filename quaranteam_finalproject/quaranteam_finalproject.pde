@@ -1,5 +1,7 @@
 import java.util.Map;
+import processing.sound.*;
 
+SoundFile pop1;
 //PImage worldmap;
 PImage soundIcon;
 PImage muteIcon;
@@ -12,6 +14,7 @@ boolean mutePressable = true;
 String state = "main";
 int countryCount = 0;
 CountryButton [] cButtons;
+CountryButton selectedButton = null;
 
 void setup() {
   size(800, 800);
@@ -19,11 +22,15 @@ void setup() {
   latitude = new FloatDict();
   longitude = new FloatDict();
 
+  pop1 = new SoundFile(this, "pop1.wav");
+  pop1.amp(1);
+
   soundIcon = loadImage("1200px-Speaker_Icon.png");
   muteIcon = loadImage("800px-Mute_Icon.png");
 
   table = loadTable("data/time_series_covid19_confirmed_global_clean.csv", "header");
 
+  // populate the table with data
   for (TableRow row : table.rows()) {
     String country = row.getString("Country/Region");
     int totalCases = row.getInt("93");
@@ -38,7 +45,24 @@ void setup() {
       longitude.set(country, lon);
     }
   }
+
+  // populate the buttons array
   cButtons = new CountryButton [countryCount];
+  float spacing = 15;
+  int i = 0;
+  float xPos = 30;
+  float yPos = 0;
+  float buttonSize = 40;
+  for (String caseKey : cases.keys()) {
+    if (i % 14 == 0) {
+      yPos = yPos + buttonSize + spacing;
+      xPos = 30;
+    } else {
+      xPos += buttonSize + spacing;
+    }
+    cButtons[i] = new CountryButton(xPos, yPos, buttonSize, caseKey, cases.get(caseKey), latitude.get(caseKey), longitude.get(caseKey));
+    i++;
+  }
 }
 
 
@@ -49,16 +73,25 @@ void draw() {
     textAlign(CENTER);
     textSize(36);
     text("Welcome\nPress SPACE to view COVID-19 data.", width/2, height/2);
+
     if (key == ' ') {
       state = "select";
     }
   } else if (state.equals("select")) {
     background(#08ECFF);
-    
-    for (String caseKey: cases.keys()) {
-      println(caseKey);
+
+    int i = 0;
+    String result = "";
+    for (String caseKey : cases.keys()) {
+      result = cButtons[i].update();
+      cButtons[i].display();
+      i++;
+      if (result.equals("country")) {
+        state = result;
+        selectedButton = cButtons[i];
+      }
     }
-    
+
     if (muted) {
       muteIcon.resize(0, 30);
       image(muteIcon, 0, 0);
@@ -69,20 +102,28 @@ void draw() {
     fill(0);
     textSize(16);
     text("Press 'M' to mute.", 100, 22);
-    
+
     text("Press 'Q' to quit.", width - 90, 22);
     if (key == 'q' || key == 'Q') {
       state = "quit";
     } 
-    
+
     smooth();
     currentDay ++;
+  } else if (state.equals("country")) {
+    background(220);
+    fill(0);
+    textAlign(CENTER);
+    textSize(30);
+    String data = selectedButton.country + "\nConfirmed Cases: " + selectedButton.cases + "\nCoordinates: " + selectedButton.latitude + ", " + selectedButton.longitude;
+    text(data, width/2, height/2 - 40);
+    text("Press SPACE to go back to the selection screen.", width/2, height - 50);
   } else if (state.equals("quit")) {
     background(#07E8A6);
     fill(0);
     textAlign(CENTER);
     textSize(64);
-    text("Good bye", width/2, height/2);
+    text("Good bye", width/2, height/2 - 40);
   }
 }
 
@@ -91,6 +132,12 @@ void keyPressed() {
     if (mutePressable) {
       muted = !muted;
       mutePressable = false;
+    }
+  } else if (state.equals("country")) {
+    if (key == ' ') {
+      state = "select";
+    } else if (key == 'q' || key == 'Q') {
+      state = "quit";
     }
   }
 }
