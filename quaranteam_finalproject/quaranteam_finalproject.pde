@@ -13,11 +13,15 @@ boolean muted = false;
 boolean mutePressable = true;
 String state = "main";
 int countryCount = 0;
+PImage virusText;
+PImage bodyText;
 CountryButton [] cButtons;
 CountryButton selectedButton = null;
+Virus body_1;
+spikes spikes_1;
 
 void setup() {
-  size(800, 800);
+  size(800, 800,P3D);
   cases = new IntDict();
   latitude = new FloatDict();
   longitude = new FloatDict();
@@ -29,6 +33,11 @@ void setup() {
   muteIcon = loadImage("800px-Mute_Icon.png");
 
   table = loadTable("data/time_series_covid19_confirmed_global_clean.csv", "header");
+  
+  virusText = loadImage("red.jpg");
+  bodyText = loadImage("body.jpg");
+  body_1 = new Virus(100,random(0,200),random(0,100),bodyText);
+  spikes_1 = new spikes(body_1.radius*.044,body_1.xloc,body_1.yloc,virusText);
 
   // populate the table with data
   for (TableRow row : table.rows()) {
@@ -69,10 +78,18 @@ void setup() {
 void draw() {
   if (state.equals("main")) {
     background(#07E8A6);
+    body_1.show();
+    spikes_1.show();
+    body_1.move();
+    spikes_1.xloc = body_1.xloc;
+    spikes_1.yloc = body_1.yloc;
     fill(0);
     textAlign(CENTER);
-    textSize(36);
-    text("Welcome\nPress SPACE to view COVID-19 data.", width/2, height/2);
+    textSize(26);
+    text("Welcome\nPress SPACE to view COVID-19 data.", width/2, height/2,150);
+    
+
+    
 
     if (key == ' ') {
       state = "select";
