@@ -5,11 +5,14 @@ PImage soundIcon;
 PImage muteIcon;
 Table table;
 int currentDay = 0;
-HashMap<String, int[]> covidMap = new HashMap<String, int[]>();
-int[] cases = new int[0];
+IntDict cases;
+FloatDict latitude,longitude;
 
 void setup() {
   size(1200, 600);
+  cases = new IntDict();
+  latitude = new FloatDict();
+  longitude = new FloatDict();
   
   worldmap = loadImage("worldmapoutline.jpg");
   image(worldmap, 0, 0);
@@ -23,15 +26,17 @@ void setup() {
   for (TableRow row : table.rows()) {
       //String province = row.getString("Province/State");
       String country = row.getString("Country/Region");
-      
-      for (int dayNumber = 1; dayNumber < 94; dayNumber = dayNumber+1) {
-        int caseNumber = row.getInt(str(dayNumber));
-        append(cases,int(caseNumber));
+      int totalCases = row.getInt("93");
+      float lat = row.getFloat("Lat");
+      float lon = row.getFloat("Long");
+      if (cases.hasKey(country)) {
+        cases.add(country,totalCases);
+      } else {
+        cases.set(country,totalCases);
+        latitude.set(country,lat);
+        longitude.set(country,lon);
       }
-      print(cases);
-      covidMap.put(country,cases);
-      int[] cases = new int[0];
-  }  
+  }
 }
     
     //covidDict.set(country,cases);
