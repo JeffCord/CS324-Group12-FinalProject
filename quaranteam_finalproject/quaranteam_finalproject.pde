@@ -99,11 +99,10 @@ void draw() {
     for (String caseKey : cases.keys()) {
       willChangeState = cButtons[i].update();
       cButtons[i].display();
-      
+
       if (willChangeState) {
         state = "country";
         selectedButton = cButtons[i];
-        println(i, selectedButton.country, "---loop if statement");
         willChangeState = false;
       }
       i++;
@@ -128,14 +127,20 @@ void draw() {
     smooth();
     currentDay ++;
   } else if (state.equals("country")) {
-    println(selectedButton.country, "---country screen");
     background(220);
+    int casesTotal = selectedButton.cases;
+    VirusIcon vIcon = new VirusIcon(width/2, height/2, 100 + (casesTotal * 0.001));
+    vIcon.display();
+    
     fill(0);
     textAlign(CENTER);
     textSize(30);
-    String data = selectedButton.country + "\nConfirmed Cases: " + selectedButton.cases + "\nCoordinates: " + selectedButton.latitude + ", " + selectedButton.longitude;
-    text(data, width/2, height/2 - 40);
-    text("Press SPACE to go back to the selection screen.", width/2, height - 50);
+    text("Confirmed Cases:\n" + casesTotal, width/2, height/2);
+    String data = selectedButton.country + "\nCoordinates: " + selectedButton.latitude + ", " + selectedButton.longitude;
+    text(data, width/2, height - 200);
+
+    textSize(20);
+    text("Press SPACE to go back to the selection screen.", width/2, height - 30);
   } else if (state.equals("quit")) {
     background(#07E8A6);
     fill(0);
