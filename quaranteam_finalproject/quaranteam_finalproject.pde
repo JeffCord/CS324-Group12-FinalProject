@@ -127,7 +127,7 @@ void draw() {
     smooth();
     currentDay ++;
   } else if (state.equals("country")) {
-    background(220);
+    background(#00F1F7);
     int casesTotal = selectedButton.cases;
     VirusIcon vIcon = new VirusIcon(width/2, height/2, 100 + (casesTotal * 0.001));
     vIcon.display();
