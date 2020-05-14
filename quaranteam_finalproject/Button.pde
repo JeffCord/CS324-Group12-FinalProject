@@ -9,7 +9,7 @@ class Button {
     this.size = size;
   }
 
-  String update() {
+  boolean update() {
     if (mousePressed) {
       if (mouseButton == LEFT && pressable) {
         if (mouseX >= x - (size/2) && mouseX <= x + (size/2) && mouseY >= y - (size/2) && mouseY <= y +(size/2)) {
@@ -18,12 +18,13 @@ class Button {
           if (!muted) {
             pop1.play();
           }
+          return true;
         }
       }
     } else if (!mousePressed || mouseButton != LEFT) {
       pressable = true;
       on = false;
     }
-    return null;
+    return false;
   }
 }
