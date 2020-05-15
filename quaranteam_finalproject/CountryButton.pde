@@ -5,6 +5,8 @@ class CountryButton extends Button {
   float longitude;
   color c1 = color(255, 0, 0, 255);
   color c2 = color(255, 0, 0, 150);
+  float z;
+  float textSize;
 
   CountryButton (float x, float y, float size, String country, int cases, float latitude, float longitude) {
     super(x, y, size);
@@ -12,6 +14,8 @@ class CountryButton extends Button {
     this.cases = cases;
     this.latitude = latitude;
     this.longitude = longitude;
+    z = 0;
+    textSize = 10;
   }
 
   void display() {
@@ -24,9 +28,9 @@ class CountryButton extends Button {
     }
     square(x, y, size);
     fill(0);
-    textSize(10);
+    textSize(textSize);
     textAlign(CENTER);
-    text(country, x, y);
+    text(country, x, y, z);
   }
 
 }

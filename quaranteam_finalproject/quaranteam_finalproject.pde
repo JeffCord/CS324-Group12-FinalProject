@@ -24,7 +24,6 @@ int caseNum = -1;
 
 void setup() {
   size(800, 800, P3D);
-  frameRate(2);
   cases = new IntDict();
   latitude = new FloatDict();
   longitude = new FloatDict();
@@ -148,6 +147,17 @@ void draw() {
     for (String caseKey : cases.keys()) {
       willChangeState = cButtons[i].update();
       cButtons[i].display();
+      cButtons[i].isOver();
+      
+      if (cButtons[i].on == true) {
+        cButtons[i].size = 50;
+        cButtons[i].textSize = 15;
+        cButtons[i].z = 10;
+      } else {
+        cButtons[i].size = 40;
+        cButtons[i].textSize = 10;
+        cButtons[i].z = 0;
+      }
 
       if (willChangeState) {
         state = "country";
