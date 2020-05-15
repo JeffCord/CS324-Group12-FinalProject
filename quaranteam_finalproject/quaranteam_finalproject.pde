@@ -20,8 +20,11 @@ CountryButton selectedButton = null;
 Virus body_1;
 spikes spikes_1;
 
+int caseNum = -1;
+
 void setup() {
   size(800, 800, P3D);
+  frameRate(2);
   cases = new IntDict();
   latitude = new FloatDict();
   longitude = new FloatDict();
@@ -76,8 +79,11 @@ void setup() {
 
 
 void draw() {
+  caseNum ++;
+
+
   if (state.equals("main")) {
-    background(#07E8A6);
+    background(225);//#07E8A6
     body_1.show();
     spikes_1.show();
     body_1.move();
@@ -86,7 +92,50 @@ void draw() {
     fill(0);
     textAlign(CENTER);
     textSize(26);
-    text("Welcome\nPress SPACE to view COVID-19 data.", width/2, height/2, 150);
+    //text("Welcome\nPress SPACE to view COVID-19 data.", width/2, height/2, 150);
+    text("Welcome\n\nPress SPACE\nto view COVID-19 data for each country.", width/2, 200, 150);
+    
+    for (TableRow row : table.rows()) {
+      String province = row.getString("Province/State");
+      String country = row.getString("Country/Region");
+      float latitude = row.getFloat("Lat");
+      float longtitude = row.getFloat("Long");
+      int totalCases = row.getInt("93");
+
+      float mapX = map(longtitude, -180, 180, 0, width); //selectedButton.lonitude
+      float mapY = map(latitude, -90, 90, height/2, height-5); //selectedButton.latitude
+
+      if (caseNum == totalCases) { //selectedButton.cases
+        stroke(255, 0, 0);
+        fill(#FF7F50);
+        textSize(15);
+
+        if (totalCases < 1000) {
+          strokeWeight(5);
+          point(mapX, mapY);
+          text(totalCases, mapX+10, mapY+1);
+          text(country, mapX+1, mapY+12);
+        } else if (totalCases < 5000) {
+          strokeWeight(20);
+          point(mapX, mapY);
+          text(totalCases, mapX+10, mapY+1);
+          text(country, mapX+1, mapY+12);
+        } else if ((totalCases < 10000) | (totalCases >=5000)) {
+          strokeWeight(50);
+          point(mapX, mapY);
+          text(totalCases, mapX+10, mapY+1);
+          text(country, mapX+1, mapY+12);
+        } else if ((totalCases < 20000) | (totalCases >= 10000)) {
+          strokeWeight(80);
+          point(mapX, mapY);
+          text(totalCases, mapX+10, mapY+1);
+          text(country, mapX+1, mapY+12);
+        }
+      }
+    }
+
+
+
 
     if (key == ' ') {
       state = "select";
@@ -131,7 +180,7 @@ void draw() {
     int casesTotal = selectedButton.cases;
     VirusIcon vIcon = new VirusIcon(width/2, height/2, 100 + (casesTotal * 0.001));
     vIcon.display();
-    
+
     fill(0);
     textAlign(CENTER);
     textSize(30);
