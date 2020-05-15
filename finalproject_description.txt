@@ -1,0 +1,39 @@
+***************************************************************FUNCTIONALITIES***************************************************************
+
+Keyboard Interactivity - The user presses space bar, Q, and M to change screens, quit, and mute the sound respectively
+
+Multiple GUI Systems - There is a main menu, a country screen, and a data screen
+
+Animation - the virus on the main screen consists of an obj file inside of a sphere that moves based on the movement of the sphere
+
+Data Input/Output - we draw the cases data for each country from a csv file
+
+Sound - a sound plays every time the user clicks on a country name
+
+***************************************************************CLASSES**************************************************************************
+
+Button - includes attributes to determine if a button is pressable or pressed. Also plays the sound
+
+CountryButton - extends Button and creates the red squares shown on the table screen. Contains case data, latitude and longitude.
+
+Protrusions - extends Virus and creates and object from an obj file that rotates, grows/shrinks, and moves with the Virus class
+
+Virus - creates a virus body that carries the Protrusions class. Rotates and moves across the main screen.
+
+VirusIcon - draws a virus icon on the data screen behind the text
+
+
+***************************************************************CHALLENGES***********************************************************************
+
+We changed our initial plan of displaying meteorite locations on a map because latitude and longitude lines are not in a
+rectangular grid
+
+***************************************************************GROUP CONTRIBUTIONS**************************************************************
+
+Jeff Cordes - created the home screen, country screen, and the data screen. Implemented the sound that plays when a country is selected.
+			  Implemented the mute button, spacebar, and quit button. Created the table of country buttons that could be pressed to 
+			  bring the user to the data screen.
+
+Jenny Jie - chose and cleaned the data, wrote a function to search iterate through the data
+
+Declan Burke - parsed through the data to create a dictionaries of case data, created and implemented the animation on the main screen
