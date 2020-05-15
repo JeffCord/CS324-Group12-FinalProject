@@ -20,11 +20,10 @@ CountryButton selectedButton = null;
 Virus body_1;
 spikes spikes_1;
 
-int caseNum = -1;
+float caseNum = -1;
 
 void setup() {
   size(800, 800, P3D);
-  
   cases = new IntDict();
   latitude = new FloatDict();
   longitude = new FloatDict();
@@ -95,8 +94,6 @@ void draw() {
     //text("Welcome\nPress SPACE to view COVID-19 data.", width/2, height/2, 150);
     text("Welcome\n\nPress SPACE\nto view COVID-19 data for each country.", width/2, 200, 150);
 
-
-
     for (TableRow row : table.rows()) {
       String province = row.getString("Province/State");
       String country = row.getString("Country/Region");
@@ -107,41 +104,42 @@ void draw() {
 
       float mapX = map(longtitude, -180, 180, 0, width - 10); //selectedButton.lonitude
       float mapY = map(latitude, -90, 90, height/2, height-10); //selectedButton.latitude
-      
+
       noFill();
       stroke(0);
       strokeWeight(1);
       rect(0+10, height/2, width-20, height/2 - 10);
 
-      if (caseNum == totalCases) { //selectedButton.cases
-        stroke(255, 0, 0);
-        fill(#FF7F50);
-        textSize(15);
+      if (frameCount % 6 == 0) {
+        if (caseNum == totalCases) { //selectedButton.cases
+          stroke(255, 0, 0);
+          fill(#FF7F50);
+          textSize(15);
 
-        if (totalCases < 1000) {
-          strokeWeight(5);
-          point(mapX, mapY);
-          text(totalCases, mapX+10, mapY+1);
-          text(country, mapX+1, mapY+12);
-        } else if (totalCases < 5000) {
-          strokeWeight(20);
-          point(mapX, mapY);
-          text(totalCases, mapX+10, mapY+1);
-          text(country, mapX+1, mapY+12);
-        } else if ((totalCases < 10000) | (totalCases >=5000)) {
-          strokeWeight(50);
-          point(mapX, mapY);
-          text(totalCases, mapX+10, mapY+1);
-          text(country, mapX+1, mapY+12);
-        } else if ((totalCases < 20000) | (totalCases >= 10000)) {
-          strokeWeight(80);
-          point(mapX, mapY);
-          text(totalCases, mapX+10, mapY+1);
-          text(country, mapX+1, mapY+12);
+          if (totalCases < 1000) {
+            strokeWeight(5);
+            point(mapX, mapY);
+            text(totalCases, mapX+10, mapY+1);
+            text(country, mapX+1, mapY+12);
+          } else if (totalCases < 5000) {
+            strokeWeight(20);
+            point(mapX, mapY);
+            text(totalCases, mapX+10, mapY+1);
+            text(country, mapX+1, mapY+12);
+          } else if ((totalCases < 10000) | (totalCases >=5000)) {
+            strokeWeight(50);
+            point(mapX, mapY);
+            text(totalCases, mapX+10, mapY+1);
+            text(country, mapX+1, mapY+12);
+          } else if ((totalCases < 20000) | (totalCases >= 10000)) {
+            strokeWeight(80);
+            point(mapX, mapY);
+            text(totalCases, mapX+10, mapY+1);
+            text(country, mapX+1, mapY+12);
+          }
         }
       }
     }
-
 
 
 
@@ -156,17 +154,6 @@ void draw() {
     for (String caseKey : cases.keys()) {
       willChangeState = cButtons[i].update();
       cButtons[i].display();
-      cButtons[i].isOver();
-      
-      if (cButtons[i].on == true) {
-        cButtons[i].size = 50;
-        cButtons[i].textSize = 15;
-        cButtons[i].z = 10;
-      } else {
-        cButtons[i].size = 40;
-        cButtons[i].textSize = 10;
-        cButtons[i].z = 0;
-      }
 
       if (willChangeState) {
         state = "country";
