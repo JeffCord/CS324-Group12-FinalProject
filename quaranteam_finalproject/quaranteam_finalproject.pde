@@ -24,7 +24,10 @@ int caseNum = -1;
 
 void setup() {
   size(800, 800, P3D);
-  frameRate(2);
+
+  if (frameCount % 6 == 0) {
+    frameRate(2);
+  }
   cases = new IntDict();
   latitude = new FloatDict();
   longitude = new FloatDict();
@@ -94,7 +97,9 @@ void draw() {
     textSize(26);
     //text("Welcome\nPress SPACE to view COVID-19 data.", width/2, height/2, 150);
     text("Welcome\n\nPress SPACE\nto view COVID-19 data for each country.", width/2, 200, 150);
-    
+
+
+
     for (TableRow row : table.rows()) {
       String province = row.getString("Province/State");
       String country = row.getString("Country/Region");
@@ -102,8 +107,14 @@ void draw() {
       float longtitude = row.getFloat("Long");
       int totalCases = row.getInt("93");
 
-      float mapX = map(longtitude, -180, 180, 0, width); //selectedButton.lonitude
-      float mapY = map(latitude, -90, 90, height/2, height-5); //selectedButton.latitude
+
+      float mapX = map(longtitude, -180, 180, 0, width - 10); //selectedButton.lonitude
+      float mapY = map(latitude, -90, 90, height/2, height-10); //selectedButton.latitude
+      
+      noFill();
+      stroke(0);
+      strokeWeight(1);
+      rect(0+10, height/2, width-20, height/2 - 10);
 
       if (caseNum == totalCases) { //selectedButton.cases
         stroke(255, 0, 0);
