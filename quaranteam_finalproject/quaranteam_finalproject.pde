@@ -20,13 +20,13 @@ CountryButton selectedButton = null;
 Virus body_1;
 spikes spikes_1;
 
-int caseNum = -1;
+float caseNum = -1;
 
 void setup() {
   size(800, 800, P3D);
   
   //if (frameCount % 6 == 0) {
-    //frameRate(2);
+  //  frameRate(2);
   //}
   cases = new IntDict();
   latitude = new FloatDict();
@@ -82,7 +82,7 @@ void setup() {
 
 
 void draw() {
-  caseNum ++;
+  caseNum = caseNum + 0.5;
 
 
   if (state.equals("main")) {
@@ -117,9 +117,10 @@ void draw() {
       rect(0+10, height/2, width-20, height/2 - 10);
 
       if (caseNum == totalCases) { //selectedButton.cases
+      
         stroke(255, 0, 0);
         fill(#FF7F50);
-        textSize(15);
+        textSize(25);
 
         if (totalCases < 1000) {
           strokeWeight(5);
