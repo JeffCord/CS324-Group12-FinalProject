@@ -25,9 +25,9 @@ int caseNum = -1;
 void setup() {
   size(800, 800, P3D);
   
-  if (frameCount % 6 == 0) {
-    frameRate(2);
-  }
+  //if (frameCount % 6 == 0) {
+    //frameRate(2);
+  //}
   cases = new IntDict();
   latitude = new FloatDict();
   longitude = new FloatDict();
